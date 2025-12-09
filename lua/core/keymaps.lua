@@ -40,3 +40,38 @@ keymap("n", "<C-l>", "<C-w>l", { desc = "Déplace le curseur dans la fenêtre dr
 -- Navigation entre les buffers
 keymap("n", "<S-l>", ":bnext<CR>", opts)
 keymap("n", "<S-h>", ":bprevious<CR>", opts)
+
+vim.keymap.set("n", "<leader>r", function()
+  local ft = vim.bo.filetype
+  local file = vim.fn.expand("%:p")   -- chemin absolu
+  if file == "" then
+    vim.notify("Pas de fichier à exécuter (buffer sans nom)", vim.log.levels.WARN)
+    return
+  end
+
+  -- Commande sous forme de liste => pas de problème avec les espaces, /, \
+  local cmd
+
+  if ft == "python" then
+    cmd = { "python", file }
+  elseif ft == "sh" or ft == "bash" then
+    cmd = { "bash", file }
+  else
+    vim.notify("Aucune commande définie pour le type de fichier: " .. ft, vim.log.levels.WARN)
+    return
+  end
+
+  vim.cmd("write")
+
+  -- split en bas + terminal
+  vim.cmd("botright 12new")
+  -- On lance la commande dans ce nouveau buffer terminal
+  local term_buf = vim.api.nvim_get_current_buf()
+  vim.fn.termopen(cmd, {
+    cwd = vim.fn.fnamemodify(file, ":h"), -- répertoire du fichier
+  })
+   -- On évite de polluer la liste de buffers
+  vim.bo[term_buf].buflisted = false
+  vim.cmd("startinsert")
+end, { desc = "Exécuter le fichier courant" })
+

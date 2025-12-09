@@ -29,19 +29,14 @@ return {
       -- Mais au lieu de passer par :Mason pour installer, je vous recommande d'ajouter une entrée à cette liste
       -- Ça permettra à votre configuration d'être plus portable
       ensure_installed = {
-        "cssls",
-        "elmls",
-        "graphql",
-        "html",
-        "lua_ls",
         "pylsp",
-        "ruff",
-        "rust_analyzer",
-        "sqlls",
-        "svelte",
-        "ts_ls",
+        "ruff_lsp",
+        "html",
+        "cssls",
         "yamlls",
+        "sqlls",
       },
+      automatic_installation = false,
     })
   end,
 }

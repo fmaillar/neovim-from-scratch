@@ -44,3 +44,9 @@ opt.iskeyword:append("-") -- on traite les mots avec des - comme un seul mot
 -- affichage des caractères spéciaux
 opt.list = true
 opt.listchars:append({ nbsp = "␣", trail = "•", precedes = "«", extends = "»", tab = "> " })
+
+-- pour le shell
+vim.opt.shell = "C:/Users/67826/scoop/apps/msys2/2025-08-30/usr/bin/zsh.exe"
+vim.opt.shellcmdflag = "-c"
+vim.opt.shellquote = ""
+vim.opt.shellxquote = ""
